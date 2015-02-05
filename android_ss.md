@@ -40,10 +40,13 @@ echo "saved ${FILENAME}."
 
 ついでにadbにpath通して無い人の為に通し方も乗っけておきます。  
 私はあえて.bash_profileにパス系のはまとめて書いてます。  
-.bash_profileはログイン時にロードされる場所なので下記記載後はPC再起動or再ログインが必要です。  
+~~.bash_profileはログイン時にロードされる場所なので下記記載後はPC再起動or再ログインが必要です。~~  
+source .bash_profile でリロード出来るそうです…。  
+便利ですね…。  
 
 ```bash
 $ vi ./.bash_profile
+$ source .bash_profile
 ```
 
 ```bash:.bash_profile
