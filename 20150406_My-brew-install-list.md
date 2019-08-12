@@ -1,3 +1,43 @@
-# My brew install list
+https://blog.tagbangers.co.jp/ja/2015/04/06/My-brew-install-list
 
-<div><h3>続編書きました</h3><p><a href="https://blog.tagbangers.co.jp/ja/2016/08/31/My_set_up_list_to_2016">My set up list to 2016</a></p><p><br></p><p><br></p><p><br></p><p><br></p><p>タイトルの英語は適当です。<br>&nbsp;Macにはcentosとかのyumやubuntuのapt-get的なHomebrewというツールがあります。<br>&nbsp;こちらパッと見あんまり使わないんじゃねぇの...?的なイメージを受けるかもしれませんがPCセットアップ直後の開発環境セットアップの際にそのパワーを発揮します。<br>&nbsp;今回はHomebrew自体の説明は省いて私が個人的にPCセットアップ後に流してるbrewの対象を公開いたします。<br>&nbsp;弊社の開発部隊(Mac利用者)では大体これぐらいあれば事足ります。</p><p>$ ruby -e "$(curl -fsSL <a class="vglnk" href="https://raw.githubusercontent.com/Homebrew/install/master/install" rel="nofollow"><span>https</span><span>://</span><span>raw</span><span>.</span><span>githubusercontent</span><span>.</span><span>com</span><span>/</span><span>Homebrew</span><span>/</span><span>install</span><span>/</span><span>master</span><span>/</span><span>install</span></a>)"</p><p>brew install git<br>&nbsp;brew install wget<br>&nbsp;brew install boot2docker<br>&nbsp;brew install qprint<br>&nbsp;brew install imagemagick<br>&nbsp;brew install maven<br>&nbsp;brew tap caskroom/cask</p><p>brew install mysql<br>&nbsp;brew install postgresql</p><p>brew cask install appcode<br>&nbsp;brew cask install android-studio<br>&nbsp;brew cask install intellij-idea<br>&nbsp;brew cask install google-japanese-ime<br>&nbsp;brew cask install sublime-text3<br>&nbsp;brew cask install google-chrome<br>&nbsp;brew cask install firefox-ja<br>&nbsp;brew cask install sourcetree<br>&nbsp;brew cask install evernote<br>&nbsp;brew cask install dropbox</p><p>brew cask install virtualbox<br>&nbsp;brew cask install genymotion</p><p>brew cask install sequel-pro<br>&nbsp;brew cask install pg-commander<br>&nbsp;brew cask install pgadmin3<br>&nbsp;brew cask install mysqlworkbench</p></div>
+# My brew install list
+続編書きました
+[My set up list to 2016](https://blog.tagbangers.co.jp/ja/2016/08/31/My_set_up_list_to_2016)
+
+---
+
+タイトルの英語は適当です。
+Macにはcentosとかのyumやubuntuのapt-get的なHomebrewというツールがあります。
+こちらパッと見あんまり使わないんじゃねぇの...?的なイメージを受けるかもしれませんがPCセットアップ直後の開発環境セットアップの際にそのパワーを発揮します。
+今回はHomebrew自体の説明は省いて私が個人的にPCセットアップ後に流してるbrewの対象を公開いたします。
+弊社の開発部隊(Mac利用者)では大体これぐらいあれば事足ります。
+
+```
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+brew install git
+brew install wget
+brew install boot2docker
+brew installqprint
+brew install imagemagick
+brew install maven
+brew tap caskroom/cask
+brew install mysql
+brew install postgresql
+brew cask install appcode
+brew cask install android-studio
+brew cask install intellij-idea
+brew cask install google-japanese-ime
+brew cask install sublime-text3
+brew cask install google-chrome
+brew cask install firefox-ja
+brew cask install sourcetree
+brew cask install evernote
+brew cask install dropbox
+brew cask install virtualbox
+brew cask install genymotion
+brew cask install sequel-pro
+brew cask install pg-commander
+brew cask install pgadmin3
+brew cask install mysqlworkbench
+```

@@ -1,8 +1,19 @@
+https://blog.tagbangers.co.jp/ja/2015/09/08/how_to_display_hibernate_sql_parameters
+
 # Hibernateで実行されたSQLとパラメータのログを出す
 
-<div><p>Hibernateで開発を行っている時に実際にSQLってどうやって実行されてるんだ?っと思ったりします。<br>そんな時にはlogback.xmlに下記のタグを追加してみてください。</p><pre class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">logger</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"org.hibernate.SQL"</span> <span class="hljs-attribute">level</span>=<span class="hljs-value">"DEBUG"</span> /&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">logger</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"org.hibernate.type.descriptor.sql.BasicBinder"</span> <span class="hljs-attribute">level</span>=<span class="hljs-value">"TRACE"</span> /&gt;</span></pre><p>そしたら下記な感じで出力されます。</p><pre class="hljs cpp"><span class="hljs-number">12</span>:<span class="hljs-number">10</span>:<span class="hljs-number">02.883</span> [http-nio-<span class="hljs-number">8081</span>-exec-<span class="hljs-number">4</span>] DEBUG org.hibernate.SQL:<span class="hljs-number">109</span> - select sample0_.id as id1_11_ from sample sample0_ where sample0_.id=? and sample0_.type=? and sample0_.create_date&gt;=?
-<span class="hljs-number">12</span>:<span class="hljs-number">10</span>:<span class="hljs-number">02.883</span> [http-nio-<span class="hljs-number">8081</span>-exec-<span class="hljs-number">4</span>] TRACE o.h.type.descriptor.sql.BasicBinder:<span class="hljs-number">81</span> - binding parameter [<span class="hljs-number">1</span>] as [INTEGER] - [<span class="hljs-number">4</span>]
-<span class="hljs-number">12</span>:<span class="hljs-number">10</span>:<span class="hljs-number">02.884</span> [http-nio-<span class="hljs-number">8081</span>-exec-<span class="hljs-number">4</span>] TRACE o.h.type.descriptor.sql.BasicBinder:<span class="hljs-number">81</span> - binding parameter [<span class="hljs-number">2</span>] as [VARCHAR] - [summary]
-<span class="hljs-number">12</span>:<span class="hljs-number">10</span>:<span class="hljs-number">02.885</span> [http-nio-<span class="hljs-number">8081</span>-exec-<span class="hljs-number">4</span>] TRACE o.h.type.descriptor.sql.BasicBinder:<span class="hljs-number">81</span> - binding parameter [<span class="hljs-number">3</span>] as [TIMESTAMP] - [<span class="hljs-number">2015</span>-<span class="hljs-number">01</span>-<span class="hljs-number">01</span>]
-<span class="hljs-number">12</span>:<span class="hljs-number">10</span>:<span class="hljs-number">02.885</span> [http-nio-<span class="hljs-number">8081</span>-exec-<span class="hljs-number">4</span>] TRACE o.h.type.descriptor.sql.BasicBinder:<span class="hljs-number">81</span> - binding parameter [<span class="hljs-number">3</span>] as [TIMESTAMP] - [<span class="hljs-number">2015</span>-<span class="hljs-number">01</span>-<span class="hljs-number">01</span> <span class="hljs-number">09</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00.0</span>]</pre><p>SQL表示するまでは結構すぐに見つかるんですがパラメータまで出力するのを検索するのに結構手間取ってしまった...。</p></div>
+Hibernateで開発を行っている時に実際にSQLってどうやって実行されてるんだ?っと思ったりします。
+そんな時にはlogback.xmlに下記のタグを追加してみてください。
+```
+<logger name="org.hibernate.SQL" level="DEBUG" />
+<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
+```
+そしたら下記な感じで出力されます。
+```
+12:10:02.883 [http-nio-8081-exec-4] DEBUG org.hibernate.SQL:109 - select sample0_.id as id1_11_ from sample sample0_ where sample0_.id=? and sample0_.type=? and sample0_.create_date>=?
+12:10:02.883 [http-nio-8081-exec-4] TRACE o.h.type.descriptor.sql.BasicBinder:81 - binding parameter [1] as [INTEGER] - [4]
+12:10:02.884 [http-nio-8081-exec-4] TRACE o.h.type.descriptor.sql.BasicBinder:81 - binding parameter [2] as [VARCHAR] - [summary]
+12:10:02.885 [http-nio-8081-exec-4] TRACE o.h.type.descriptor.sql.BasicBinder:81 - binding parameter [3] as [TIMESTAMP] - [2015-01-01]
+12:10:02.885 [http-nio-8081-exec-4] TRACE o.h.type.descriptor.sql.BasicBinder:81 - binding parameter [3] as [TIMESTAMP] - [2015-01-01 09:00:00.0]
+```
+SQL表示するまでは結構すぐに見つかるんですがパラメータまで出力するのを検索するのに結構手間取ってしまった...。

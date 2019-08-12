@@ -1,3 +1,25 @@
+https://blog.tagbangers.co.jp/ja/2017/03/14/webstorm_darcula
+
 # WebStormでエディタ部分だけ白くなっていしまった時の対処
 
-<div><p data-line="2">ご無沙汰してます。 奥村です。<br>今年に入ってから何かとドタバタでブログかけてなかったのでふとした事を投稿しときます。</p><p data-line="6">今まさにWebStormをインストールしてさぁコーディングするぜ!っと思ったら↓こんなんになりました。&nbsp;</p><p data-line="6"><img class="fr-dib fr-fil fr-draggable" src="/20170314_webstorm_darcula/1.png" data-id="d689b43c-f144-48e1-8e89-44eb05d63a79" data-name="ss3.png" style="width: 459px; height: 294.014px;"></p><p data-line="9">IDEはDarcula派なわたくしめとしてはなかなかに死活問題。 そして結構ググっても出てこないので備忘録がてら投稿しておきます。<br>対処法としては2パターンあります。&nbsp;</p><p data-line="12">1.インストール時にしっかり指定する</p><p data-line="12">IDE themeの方はしっかり変えるんですがEditor colors and fontsの方を変え忘れるとこの悲劇に見舞われます。&nbsp;</p><p data-line="12"><img class="fr-dib fr-fil fr-draggable" src="/20170314_webstorm_darcula/2.png" data-id="a2ab24e6-dd51-416c-9231-52984b7f83e0" data-name="ss2.png" style="width: 485px; height: 349.2px;"></p><p data-line="17">2.設定画面で変更する</p><p data-line="17">地味に見つけにくいですがこちらもしっかりあります。<br>初期インストール時のダイアログをミスってしまった場合はこちらから変更可能です。<br>Editor &gt; Colors &amp; Fonts &gt; Scheme</p><p data-line="17"><img class="fr-dib fr-fil fr-draggable" src="/20170314_webstorm_darcula/3.png" data-id="96831ca7-6f44-4262-afa9-b7e1e5e38878" data-name="ss4.png" style="width: 675px; height: 469.625px;"></p><p data-line="22">Enjoy! Darcula theme!&nbsp;</p><p data-line="22"><img class="fr-dib fr-fil fr-draggable" src="/20170314_webstorm_darcula/4.png" data-id="4bfed2ef-4302-4ca4-9002-d235efe5191b" data-name="ss5.png" style="width: 679px; height: 432.958px;"></p></div>
+ご無沙汰してます。 奥村です。
+今年に入ってから何かとドタバタでブログかけてなかったのでふとした事を投稿しときます。
+今まさにWebStormをインストールしてさぁコーディングするぜ!っと思ったら↓こんなんになりました。
+![1.png](/20170314_webstorm_darcula/1.png)
+
+IDEはDarcula派なわたくしめとしてはなかなかに死活問題。 そして結構ググっても出てこないので備忘録がてら投稿しておきます。
+対処法としては2パターンあります。
+1.インストール時にしっかり指定する
+IDE themeの方はしっかり変えるんですがEditor colors and fontsの方を変え忘れるとこの悲劇に見舞われます。
+![2.png](/20170314_webstorm_darcula/2.png)
+
+2.設定画面で変更する
+地味に見つけにくいですがこちらもしっかりあります。
+初期インストール時のダイアログをミスってしまった場合はこちらから変更可能です。
+Editor > Colors & Fonts > Scheme
+
+![3.png](/20170314_webstorm_darcula/3.png)
+
+Enjoy! Darcula theme!
+
+![4.png](/20170314_webstorm_darcula/4.png)

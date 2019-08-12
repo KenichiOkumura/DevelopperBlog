@@ -1,73 +1,108 @@
+https://blog.tagbangers.co.jp/ja/2015/05/22/setting-of-local-e-mail-for-mac
+
 # Macな開発でローカル配信メールを設定
+Macにおいて開発する際に結構困るのがメール設定。
+アカウント登録や通知系で結構利用しますよね。
+プログラム側の実装はJavaMailなど優秀なライブラリが多数あり記事も結構みかけます。
+メールを配送する側の記事もルーティングさせる記事は良く見かけますがあえて送信させない記事はそんなになかったのでまとめてみました。
 
-<div><p>Macにおいて開発する際に結構困るのがメール設定。<br>アカウント登録や通知系で結構利用しますよね。<br>プログラム側の実装はJavaMailなど優秀なライブラリが多数あり記事も結構みかけます。<br>メールを配送する側の記事もルーティングさせる記事は良く見かけますがあえて送信させない記事はそんなになかったのでまとめてみました。</p><h2>環境</h2><p>OSX Yosemite 10.10.3<br>Postfix 2.11.0</p><h2>設定</h2><h4>transport_mapsの作成</h4><pre class="hljs ruby"><span class="hljs-variable">$ </span>sudo vi /etc/postfix/transport_maps
+## 環境
+OSX Yosemite 10.10.3
+Postfix 2.11.0
+## 設定
+### transport_mapsの作成
+```
+$ sudo vi /etc/postfix/transport_maps
 
-<span class="hljs-comment"># 下記内容を追記</span>
-/^.*@.*<span class="hljs-variable">$/</span> local
-</pre><h4>aliases.dbの作成と設定の適用</h4><pre class="hljs ruby"><span class="hljs-variable">$ </span>sudo postalias /etc/postfix/aliases
-<span class="hljs-variable">$ </span>sudo newaliases
-</pre><h4>main.cfの書き換え</h4><pre class="hljs makefile">$ sudo vi /etc/postfix/main.cf
+# 下記内容を追記
+/^.*@.*$/ local
+```
 
-<span class="hljs-comment"># 未指定のlocal_recipient_mapsを追記</span>
-<span class="hljs-comment">#local_recipient_maps =</span>
+### aliases.dbの作成と設定の適用
+```
+$ sudo postalias /etc/postfix/aliases
+$ sudo newaliases
+```
+
+### main.cfの書き換え
+```
+$ sudo vi /etc/postfix/main.cf
+
+# 未指定のlocal_recipient_mapsを追記
+#local_recipient_maps =
 ↓
-<span class="hljs-comment">#local_recipient_maps =</span>
-<span class="hljs-constant">local_recipient_maps</span> =
+#local_recipient_maps =
+local_recipient_maps =
 
-<span class="hljs-comment"># postfix内のaliasesを指定</span>
-<span class="hljs-comment">#alias_maps = netinfo:/aliases</span>
+# postfix内のaliasesを指定
+#alias_maps = netinfo:/aliases
 ↓
-<span class="hljs-comment">#alias_maps = netinfo:/aliases</span>
-<span class="hljs-constant">alias_maps</span> = hash:/etc/postfix/aliases
+#alias_maps = netinfo:/aliases
+alias_maps = hash:/etc/postfix/aliases
 
-<span class="hljs-comment"># postfix内のaliasesを指定</span>
-<span class="hljs-comment">#alias_database = hash:/etc/aliases, hash:/opt/majordomo/aliases</span>
+# postfix内のaliasesを指定
+#alias_database = hash:/etc/aliases, hash:/opt/majordomo/aliases
 ↓
-<span class="hljs-comment">#alias_database = hash:/etc/aliases, hash:/opt/majordomo/aliases</span>
-<span class="hljs-constant">alias_database</span> = hash:/etc/postfix/aliases
+#alias_database = hash:/etc/aliases, hash:/opt/majordomo/aliases
+alias_database = hash:/etc/postfix/aliases
 
-<span class="hljs-comment"># メールボックスタイプに指定</span>
-<span class="hljs-comment">#home_mailbox = Mailbox</span>
+# メールボックスタイプに指定
+#home_mailbox = Mailbox
 ↓
-<span class="hljs-comment">#home_mailbox = Mailbox</span>
-<span class="hljs-constant">home_mailbox</span> = Maildir/
+#home_mailbox = Mailbox
+home_mailbox = Maildir/
 
-<span class="hljs-comment"># 知らないアドレスに対するメールを転送するユーザーを指定</span>
-<span class="hljs-comment">#luser_relay = admin+$local</span>
+# 知らないアドレスに対するメールを転送するユーザーを指定
+#luser_relay = admin+$local
 ↓
-<span class="hljs-comment">#luser_relay = admin+$local</span>
-<span class="hljs-constant">luser_relay</span> = okumura
+#luser_relay = admin+$local
+luser_relay = okumura
 
-<span class="hljs-comment">#先ほど作成したtransport_mapsを指定</span>
-<span class="hljs-comment"># transport_mapsは既存のconf内では使われていないので最下行に追記</span>
-<span class="hljs-constant">transport_maps</span> = pcre:/etc/postfix/transport_maps
-</pre><p>これでJavaMailなどから25ポート向けにメールが発送された場合に自動的に/Users/okumura/Maildirへすべて転送されます。<br>transport_mapsの内容がその他のドメインに対するメールの設定になってます。<br></p><h3>おまけ</h3><h5>諸々のメールコマンド</h5><pre class="hljs ruby"><span class="hljs-comment"># postfix起動</span>
-<span class="hljs-variable">$ </span>sudo /usr/sbin/postfix start
+#先ほど作成したtransport_mapsを指定
+# transport_mapsは既存のconf内では使われていないので最下行に追記
+transport_maps = pcre:/etc/postfix/transport_maps
+```
 
-<span class="hljs-comment"># postfix再起動</span>
-<span class="hljs-variable">$ </span>sudo /usr/sbin/postfix reload
+これでJavaMailなどから25ポート向けにメールが発送された場合に自動的に/Users/okumura/Maildirへすべて転送されます。
+transport_mapsの内容がその他のドメインに対するメールの設定になってます。
 
-<span class="hljs-comment"># メールキュー一覧表示</span>
-<span class="hljs-variable">$ </span>mailq
+## おまけ
+### 諸々のメールコマンド
+```
+# postfix起動
+$ sudo /usr/sbin/postfix start
 
-<span class="hljs-comment"># メール内容表示</span>
-<span class="hljs-variable">$ </span>sudo postcat -q [キュー<span class="hljs-constant">ID</span>]
+# postfix再起動
+$ sudo /usr/sbin/postfix reload
 
-<span class="hljs-comment"># メール内容デコード表示(nkf必須)</span>
-<span class="hljs-variable">$ </span>sudo postcat -q [キュー<span class="hljs-constant">ID</span>] | nkf -m
+# メールキュー一覧表示
+$ mailq
 
-<span class="hljs-comment"># メールキュー全削除</span>
-<span class="hljs-variable">$ </span>sudo postsuper -d <span class="hljs-constant">ALL</span>
+# メール内容表示
+$ sudo postcat -q [キューID]
 
-<span class="hljs-comment"># postfixバージョン確認</span>
-<span class="hljs-variable">$ </span>postconf mail_version
+# メール内容デコード表示(nkf必須)
+$ sudo postcat -q [キューID] | nkf -m
 
-<span class="hljs-comment"># メール送信確認</span>
-<span class="hljs-variable">$ </span>mail [メールアドレス]
-<span class="hljs-variable">$ </span><span class="hljs-constant">Subject</span><span class="hljs-symbol">:</span> [件名入力後<span class="hljs-constant">Enter</span>]
-<span class="hljs-variable">$ </span>[本文入力後<span class="hljs-constant">Enter</span>]
-<span class="hljs-variable">$ </span>[本文入力を終了し送信する場合は <span class="hljs-constant">Ctrl</span> + <span class="hljs-constant">D</span> ]
-</pre><h5>ローカルのメールアドレス</h5><p>[ユーザー名]@[PC名].local</p><h5>Telnetを使ったメール送信</h5><pre class="hljs sql">$ telnet localhost 25
+# メールキュー全削除
+$ sudo postsuper -d ALL
+
+# postfixバージョン確認
+$ postconf mail_version
+
+# メール送信確認
+$ mail [メールアドレス]
+$ Subject: [件名入力後Enter]
+$ [本文入力後Enter]
+$ [本文入力を終了し送信する場合は Ctrl + D ]
+```
+
+### ローカルのメールアドレス
+[ユーザー名]@[PC名].local
+
+### Telnetを使ったメール送信
+```
+$ telnet localhost 25
 Trying ::1...
 Connected to localhost.
 Escape character is '^]'.
@@ -83,16 +118,16 @@ RCPT TO:okumura@tagbangers.co.jp ←送信先メールアドレス
 250 2.1.5 Ok
 DATA ←メール内容の記載開始を通知
 
-354 <span class="hljs-operator"><span class="hljs-keyword">End</span> <span class="hljs-keyword">data</span> <span class="hljs-keyword">with</span> &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
-subject: <span class="hljs-keyword">test</span> ←件名
-<span class="hljs-keyword">from</span>: ken@tagbangers.co.jp ←送信元メールアドレス
-<span class="hljs-keyword">to</span>: okumura@tagbangers.co.jp ←送信先メールアドレス
-mail <span class="hljs-keyword">test</span> <span class="hljs-keyword">body</span> ←本文
-. ←メール終了&amp;送信
+354 End data with <CR><LF>.<CR><LF>
+subject: test ←件名
+from: ken@tagbangers.co.jp ←送信元メールアドレス
+to: okumura@tagbangers.co.jp ←送信先メールアドレス
+mail test body ←本文
+. ←メール終了&送信
 
-<span class="hljs-number">250</span> <span class="hljs-number">2.0</span><span class="hljs-number">.0</span> Ok: queued <span class="hljs-keyword">as</span> F32D559FD77
+250 2.0.0 Ok: queued as F32D559FD77
 quit ←telnet終了
 
-<span class="hljs-number">221</span> <span class="hljs-number">2.0</span><span class="hljs-number">.0</span> Bye
-<span class="hljs-keyword">Connection</span> closed <span class="hljs-keyword">by</span> foreign host.
-</span></pre></div>
+221 2.0.0 Bye
+Connection closed by foreign host.
+```
